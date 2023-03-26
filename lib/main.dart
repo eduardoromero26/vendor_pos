@@ -1,4 +1,4 @@
-import 'package:eco_tours_yucatan/screens/home/home.dart';
+import 'package:eco_tours_yucatan/screens/auth/login/login.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomeScreen(),
+      home: Login(),
     );
   }
 }

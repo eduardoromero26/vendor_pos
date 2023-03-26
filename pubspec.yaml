@@ -26,8 +26,10 @@ flutter:
   assets:
     - assets/
     - assets/fonts/
+    - assets/images/
+    - assets/icons/
 
   fonts:
     - family: Avenir
       fonts:
-        - asset: fonts/avenir_regular.otf
+        - asset: assets/fonts/avenir_regular.otf

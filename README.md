@@ -1,4 +1,4 @@
-# eco_tours_yucatan
+# tours_yucatan
 
 A new Flutter project.
 

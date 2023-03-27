@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "880596154626",
+    "project_id": "tours-yucatan",
+    "storage_bucket": "tours-yucatan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:880596154626:android:1e3da2a12f2d47b50fea1b",
+        "android_client_info": {
+          "package_name": "com.example.eco_tours_yucatan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "880596154626-gsodufor6lhln4ntgbk8uiv1mhbp3lv2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8V9NjN6zOtlSFOJoOzvYOF5bMw42u2Co"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "880596154626-gsodufor6lhln4ntgbk8uiv1mhbp3lv2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

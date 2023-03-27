@@ -1,5 +1,6 @@
 import 'package:eco_tours_yucatan/style/colors.dart';
 import 'package:eco_tours_yucatan/widgets/atoms/search_bar/search_bar.dart';
+import 'package:eco_tours_yucatan/widgets/atoms/text/wrap_text.dart';
 import 'package:eco_tours_yucatan/widgets/molecules/card/card_list.dart';
 import 'package:eco_tours_yucatan/widgets/molecules/category_carousel/category_carousel..dart';
 import 'package:eco_tours_yucatan/widgets/molecules/category_list/category_list.dart';
@@ -97,14 +98,10 @@ class HomeScreen extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    Wrap(children: const [
-                      Text('¿A donde quieres ir?',
-                          style: TextStyle(
-                              fontFamily: 'Avenir',
-                              color: Colors.black,
-                              fontSize: 32,
-                              fontWeight: FontWeight.bold)),
-                    ]),
+                    WrapText(
+                        text: '¿Qué quieres hacer en Telchac?',
+                        fontSize: 28.0,
+                        fontWeight: FontWeight.bold),
                     const SizedBox(
                       height: 10,
                     ),
@@ -120,14 +117,12 @@ class HomeScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
+                Padding(
                   padding: EdgeInsets.only(left: 20),
-                  child: Text('Explora los Tours',
-                      style: TextStyle(
-                          fontFamily: 'Avenir',
-                          color: Colors.black,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold)),
+                  child: WrapText(
+                      text: 'Explora los tours del día',
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold),
                 ),
                 CategoryList(categories: categories),
                 const SizedBox(height: 8),
@@ -140,14 +135,12 @@ class HomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.only(left: 20),
-                  child: Text('Categorias',
-                      style: TextStyle(
-                          fontFamily: 'Avenir',
-                          color: Colors.black,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold)),
+                  child: WrapText(
+                      text: 'Categorias',
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                   height: 10,

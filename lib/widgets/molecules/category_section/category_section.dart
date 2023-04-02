@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:eco_tours_yucatan/widgets/atoms/category_filter/category_item.dart';
+import 'package:vendor_pos/widgets/atoms/category_filter/category_item.dart';
 
 class CategorySection extends StatefulWidget {
   final List<String> categories;

@@ -1,4 +1,4 @@
-import 'package:eco_tours_yucatan/widgets/atoms/custom_text_field/custom_text_field.dart';
+import 'package:vendor_pos/widgets/atoms/custom_text_field/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
 class FormField extends StatelessWidget {

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.eco_tours_yucatan">
+    package="com.example.vendor_pos">
    <application
-        android:label="eco_tours_yucatan"
+        android:label="vendor_pos"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "eco_tours_yucatan",
+            "name": "vendor_pos",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "eco_tours_yucatan (profile mode)",
+            "name": "vendor_pos (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "eco_tours_yucatan (release mode)",
+            "name": "vendor_pos (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

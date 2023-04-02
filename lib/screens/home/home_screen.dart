@@ -1,9 +1,9 @@
-import 'package:eco_tours_yucatan/style/colors.dart';
-import 'package:eco_tours_yucatan/widgets/atoms/search_bar/search_bar.dart';
-import 'package:eco_tours_yucatan/widgets/atoms/text/wrap_text.dart';
-import 'package:eco_tours_yucatan/widgets/molecules/card/card_list.dart';
-import 'package:eco_tours_yucatan/widgets/molecules/category_carousel/category_carousel..dart';
-import 'package:eco_tours_yucatan/widgets/molecules/category_list/category_list.dart';
+import 'package:vendor_pos/style/colors.dart';
+import 'package:vendor_pos/widgets/atoms/search_bar/search_bar.dart';
+import 'package:vendor_pos/widgets/atoms/text/wrap_text.dart';
+import 'package:vendor_pos/widgets/molecules/card/card_list.dart';
+import 'package:vendor_pos/widgets/molecules/category_carousel/category_carousel..dart';
+import 'package:vendor_pos/widgets/molecules/category_list/category_list.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {

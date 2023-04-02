@@ -1,9 +1,9 @@
-import 'package:eco_tours_yucatan/firebase_options.dart';
+import 'package:vendor_pos/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:eco_tours_yucatan/screens/home/home_screen.dart';
-import 'package:eco_tours_yucatan/screens/auth/login/login_screen.dart';
+import 'package:vendor_pos/screens/home/home_screen.dart';
+import 'package:vendor_pos/screens/auth/login/login_screen.dart';
 import 'providers/auth/auth_provider.dart';
 
 void main() async {

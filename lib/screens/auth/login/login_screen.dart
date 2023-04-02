@@ -1,9 +1,9 @@
-import 'package:eco_tours_yucatan/providers/auth/auth_provider.dart';
-import 'package:eco_tours_yucatan/style/colors.dart';
-import 'package:eco_tours_yucatan/widgets/atoms/custom_text_field/custom_text_field.dart';
-import 'package:eco_tours_yucatan/widgets/atoms/cutom_buttons/custom_elevated_button.dart';
-import 'package:eco_tours_yucatan/widgets/atoms/cutom_buttons/custom_text_button.dart';
-import 'package:eco_tours_yucatan/widgets/atoms/text/wrap_text.dart';
+import 'package:vendor_pos/providers/auth/auth_provider.dart';
+import 'package:vendor_pos/style/colors.dart';
+import 'package:vendor_pos/widgets/atoms/custom_text_field/custom_text_field.dart';
+import 'package:vendor_pos/widgets/atoms/cutom_buttons/custom_elevated_button.dart';
+import 'package:vendor_pos/widgets/atoms/cutom_buttons/custom_text_button.dart';
+import 'package:vendor_pos/widgets/atoms/text/wrap_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

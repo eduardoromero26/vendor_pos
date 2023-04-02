@@ -1,6 +1,6 @@
 {
-    "name": "eco_tours_yucatan",
-    "short_name": "eco_tours_yucatan",
+    "name": "vendor_pos",
+    "short_name": "vendor_pos",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

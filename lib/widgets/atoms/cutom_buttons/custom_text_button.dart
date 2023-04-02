@@ -1,4 +1,4 @@
-import 'package:eco_tours_yucatan/style/colors.dart';
+import 'package:vendor_pos/style/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextButton extends StatelessWidget {

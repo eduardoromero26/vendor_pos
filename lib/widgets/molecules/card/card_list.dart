@@ -1,4 +1,4 @@
-import 'package:eco_tours_yucatan/widgets/molecules/card/card.dart';
+import 'package:vendor_pos/widgets/molecules/card/card.dart';
 import 'package:flutter/material.dart';
 
 class CardListWidget extends StatelessWidget {

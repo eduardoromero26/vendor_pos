@@ -20,53 +20,66 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 60),
-              WrapText(
-                  text: 'Welcome back!',
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold),
-              const SizedBox(height: 10),
-              WrapText(
-                text: 'Log in to your account',
-                fontSize: 18.0,
-                fontColor: Colors.grey,
-              ),
-              const SizedBox(height: 50),
-              CustomTextField(
-                controller: _emailController,
-                hintText: 'Email address',
-                prefixIcon: Icons.email,
-              ),
-              const SizedBox(height: 20),
-              CustomTextField(
-                controller: _passwordController,
-                hintText: 'Password',
-                prefixIcon: Icons.lock,
-                obscureText: true,
-              ),
-              const SizedBox(height: 40),
-              CustomElevatedButton(
-                  authProvider: authProvider,
-                  emailController: _emailController,
-                  passwordController: _passwordController),
-              const SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Don\'t have an account?',
-                    style: TextStyle(fontSize: 16),
+        child: CustomScrollView(
+          slivers: <Widget>[
+            SliverToBoxAdapter(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                    minHeight: MediaQuery.of(context).size.height -
+                        MediaQuery.of(context).padding.vertical),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 120,
+                    ),
+                    child: Column(
+                      children: [
+                        WrapText(
+                            text: 'Welcome back!',
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.bold),
+                        const SizedBox(height: 10),
+                        WrapText(
+                          text: 'Log in to your account',
+                          fontSize: 18.0,
+                          fontColor: Colors.grey,
+                        ),
+                        const SizedBox(height: 50),
+                        CustomTextField(
+                          controller: _emailController,
+                          hintText: 'Email address',
+                          prefixIcon: Icons.email,
+                        ),
+                        const SizedBox(height: 20),
+                        CustomTextField(
+                          controller: _passwordController,
+                          hintText: 'Password',
+                          prefixIcon: Icons.lock,
+                          obscureText: true,
+                        ),
+                        const SizedBox(height: 40),
+                        CustomElevatedButton(
+                            authProvider: authProvider,
+                            emailController: _emailController,
+                            passwordController: _passwordController),
+                        const SizedBox(height: 30),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'Don\'t have an account?',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            CustomTextButton(),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                  CustomTextButton(),
-                ],
+                ),
               ),
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );

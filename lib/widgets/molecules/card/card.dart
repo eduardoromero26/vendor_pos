@@ -14,7 +14,6 @@ class CardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(right: 4, left: 20, bottom: 10),
       width: 260,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
@@ -28,13 +27,11 @@ class CardWidget extends StatelessWidget {
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
             child: Image.network(
               imageUrl,
-              height: 140,
               width: double.infinity,
               fit: BoxFit.cover,
             ),

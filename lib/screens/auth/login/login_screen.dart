@@ -8,8 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController =
+      TextEditingController(text: 'test@mail.com');
+  final TextEditingController _passwordController =
+      TextEditingController(text: '123456');
 
   LoginScreen({super.key});
 

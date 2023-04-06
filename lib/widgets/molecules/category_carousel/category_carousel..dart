@@ -34,12 +34,7 @@ class _CategoryCarouselState extends State<CategoryCarousel> {
               });
             },
             child: Padding(
-              padding: EdgeInsets.only(
-                left: index == 0 ? 20 : _itemSpacing / 2,
-                right: index == widget.categories.length - 1
-                    ? 20
-                    : _itemSpacing / 2,
-              ),
+              padding: const EdgeInsets.only(left: 10, right: 10),
               child: Container(
                 height: _itemHeight,
                 width: _itemWidth,
@@ -57,7 +52,7 @@ class _CategoryCarouselState extends State<CategoryCarousel> {
                   ],
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [

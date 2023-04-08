@@ -15,14 +15,15 @@ class AddNewProduct extends StatefulWidget {
 }
 
 class _AddNewProductState extends State<AddNewProduct> {
-  TextEditingController _titleCtrl = TextEditingController();
-  TextEditingController _descriptionCtrl = TextEditingController();
-  TextEditingController _mobileCtrl = TextEditingController();
-  TextEditingController _priceCtrl = TextEditingController();
+  final TextEditingController _titleCtrl = TextEditingController();
+  final TextEditingController _descriptionCtrl = TextEditingController();
+  final TextEditingController _mobileCtrl = TextEditingController();
+  final TextEditingController _priceCtrl = TextEditingController();
   var _uploadImages;
   var userObj;
-  var _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-  Random _rnd = Random();
+  final _chars =
+      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  final Random _rnd = Random();
   var _userName;
 
   String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
@@ -30,7 +31,7 @@ class _AddNewProductState extends State<AddNewProduct> {
 
   uploadImage() async {
     var filePath = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (filePath!.path.length != 0) {
+    if (filePath!.path.isNotEmpty) {
       File file = File(filePath.path);
       var storageRef = await FirebaseStorage.instance
           .ref()
@@ -39,7 +40,6 @@ class _AddNewProductState extends State<AddNewProduct> {
           .putFile(file);
 
       var uploadedURL = await storageRef.ref.getDownloadURL();
-      print(uploadedURL);
       setState(() {
         _uploadImages = uploadedURL;
       });

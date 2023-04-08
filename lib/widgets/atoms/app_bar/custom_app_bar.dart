@@ -21,7 +21,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           children: [
             IconButton(
               onPressed: onMenuPressed,
-              icon: Icon(Icons.menu),
+              icon: const Icon(Icons.menu),
             ),
             Expanded(
               child: Padding(
@@ -34,21 +34,21 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             CircleAvatar(
               radius: 20,
-              backgroundImage: NetworkImage(
+              backgroundImage: const NetworkImage(
                   'https://avatars.githubusercontent.com/u/1941417?v=4'),
               child: PopupMenuButton(
                 itemBuilder: (_) => <PopupMenuItem<String>>[
-                  PopupMenuItem<String>(
+                  const PopupMenuItem<String>(
                     value: 'profile',
-                    child: const Text('Profile'),
+                    child: Text('Profile'),
                   ),
-                  PopupMenuItem<String>(
+                  const PopupMenuItem<String>(
                     value: 'settings',
-                    child: const Text('Settings'),
+                    child: Text('Settings'),
                   ),
-                  PopupMenuItem<String>(
+                  const PopupMenuItem<String>(
                     value: 'logout',
-                    child: const Text('Logout'),
+                    child: Text('Logout'),
                   ),
                 ],
               ),

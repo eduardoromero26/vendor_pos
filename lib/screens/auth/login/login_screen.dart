@@ -1,5 +1,4 @@
 import 'package:vendor_pos/providers/auth/auth_provider.dart';
-import 'package:vendor_pos/style/colors.dart';
 import 'package:vendor_pos/widgets/atoms/custom_text_field/custom_text_field.dart';
 import 'package:vendor_pos/widgets/atoms/cutom_buttons/custom_elevated_button.dart';
 import 'package:vendor_pos/widgets/atoms/cutom_buttons/custom_text_button.dart';
@@ -67,8 +66,8 @@ class LoginScreen extends StatelessWidget {
                         const SizedBox(height: 30),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
+                          children: const [
+                            Text(
                               'Don\'t have an account?',
                               style: TextStyle(fontSize: 16),
                             ),

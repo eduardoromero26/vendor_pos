@@ -1,11 +1,11 @@
-import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
-import 'package:vendor_pos/screens/home/home_screen.dart';
-import 'package:vendor_pos/screens/menu/side_menu.dart';
+import 'package:vendor_pos/providers/auth/products_provider.dart';
 import 'package:vendor_pos/style/colors.dart';
-import 'package:vendor_pos/widgets/atoms/search_bar/search_bar.dart';
-import 'package:vendor_pos/widgets/organism/categories/categories_menu.dart';
+import 'package:vendor_pos/widgets/molecules/cart_item/cart_item.dart';
+import 'package:vendor_pos/widgets/molecules/custom_app_bar/custom_sliver_app_bar.dart';
 import 'package:vendor_pos/widgets/organism/products_grid/products_grid.dart';
+import 'package:vendor_pos/widgets/organism/shopping_cart/shopping_cart.dart';
+import 'package:provider/provider.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
@@ -15,181 +15,66 @@ class MainLayout extends StatefulWidget {
 }
 
 class _MainLayoutState extends State<MainLayout> {
-  List<SideMenuItem> items = [
-    SideMenuItem(
-      // Priority of item to show on SideMenu, lower value is displayed at the top
-      priority: 0,
-      icon: Icon(Icons.home),
-      badgeContent: Text(
-        '3',
-        style: TextStyle(color: Colors.white),
-      ),
-    ),
-    SideMenuItem(
-      priority: 1,
-      icon: Icon(Icons.settings),
-    ),
-    SideMenuItem(
-      priority: 2,
-      icon: Icon(Icons.exit_to_app),
-    ),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<ProductsProvider>(context, listen: false).fetchProducts();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> cardsData = [
-      {
-        'title': 'Casa de playa',
-        'subTitle': 'Anillo',
-        'imageUrl': 'https://picsum.photos/id/100/400/200',
-      },
-      {
-        'title': 'Habitación en la selva',
-        'subTitle': 'Collar',
-        'imageUrl': 'https://picsum.photos/id/200/400/200',
-      },
-      {
-        'title': 'Casa de playa',
-        'subTitle': 'Anillo',
-        'imageUrl': 'https://picsum.photos/id/100/400/200',
-      },
-      {
-        'title': 'Habitación en la selva',
-        'subTitle': 'Collar',
-        'imageUrl': 'https://picsum.photos/id/200/400/200',
-      },
-      {
-        'title': 'Casa de playa',
-        'subTitle': 'Anillo',
-        'imageUrl': 'https://picsum.photos/id/100/400/200',
-      },
-      {
-        'title': 'Habitación en la selva',
-        'subTitle': 'Collar',
-        'imageUrl': 'https://picsum.photos/id/200/400/200',
-      },
-      {
-        'title': 'Casa de playa',
-        'subTitle': 'Anillo',
-        'imageUrl': 'https://picsum.photos/id/100/400/200',
-      },
-      {
-        'title': 'Habitación en la selva',
-        'subTitle': 'Collar',
-        'imageUrl': 'https://picsum.photos/id/200/400/200',
-      },
-      {
-        'title': 'Casa de playa',
-        'subTitle': 'Anillo',
-        'imageUrl': 'https://picsum.photos/id/100/400/200',
-      },
-      {
-        'title': 'Habitación en la selva',
-        'subTitle': 'Collar',
-        'imageUrl': 'https://picsum.photos/id/200/400/200',
-      },
-      {
-        'title': 'Casa de playa',
-        'subTitle': 'Anillo',
-        'imageUrl': 'https://picsum.photos/id/100/400/200',
-      },
-      {
-        'title': 'Habitación en la selva',
-        'subTitle': 'Collar',
-        'imageUrl': 'https://picsum.photos/id/200/400/200',
-      },
-      {
-        'title': 'Casa de playa',
-        'subTitle': 'Anillo',
-        'imageUrl': 'https://picsum.photos/id/100/400/200',
-      },
-      {
-        'title': 'Habitación en la selva',
-        'subTitle': 'Collar',
-        'imageUrl': 'https://picsum.photos/id/200/400/200',
-      },
-      {
-        'title': 'Casa de playa',
-        'subTitle': 'Anillo',
-        'imageUrl': 'https://picsum.photos/id/100/400/200',
-      },
-      {
-        'title': 'Habitación en la selva',
-        'subTitle': 'Collar',
-        'imageUrl': 'https://picsum.photos/id/200/400/200',
-      },
-      {
-        'title': 'Casa de playa',
-        'subTitle': 'Anillo',
-        'imageUrl': 'https://picsum.photos/id/100/400/200',
-      },
-      {
-        'title': 'Habitación en la selva',
-        'subTitle': 'Collar',
-        'imageUrl': 'https://picsum.photos/id/200/400/200',
-      },
-      {
-        'title': 'Casa de playa',
-        'subTitle': 'Anillo',
-        'imageUrl': 'https://picsum.photos/id/100/400/200',
-      },
-      {
-        'title': 'Habitación en la selva',
-        'subTitle': 'Collar',
-        'imageUrl': 'https://picsum.photos/id/200/400/200',
-      },
-      {
-        'title': 'Casa de playa',
-        'subTitle': 'Anillo',
-        'imageUrl': 'https://picsum.photos/id/100/400/200',
-      },
-      {
-        'title': 'Habitación en la selva',
-        'subTitle': 'Collar',
-        'imageUrl': 'https://picsum.photos/id/200/400/200',
-      },
+    final productsData = Provider.of<ProductsProvider>(context).products;
+    final List<CartItem> cartItems = [
+      const CartItem(
+        imageUrl:
+            'https://minervajewelrymx.com/wp-content/uploads/2022/09/Curvy-Hoops-scaled.jpg',
+        title: 'Curvy hoops',
+        quantity: 2,
+        price: 150.0,
+      ),
+      const CartItem(
+        imageUrl:
+            'https://minervajewelrymx.com/wp-content/uploads/2022/09/Sugar-Boo-collar--scaled.jpg',
+        title: 'Sugar boo collar',
+        quantity: 1,
+        price: 250.0,
+      ),
     ];
     final List<String> categories = [
-      'All',
-      'Beaches',
-      'Museums',
-      'Parks',
-      'Restaurants'
+      'Anillos',
+      'Aretes',
+      'Collares',
+      'Pulseras',
+      'Personalizados'
     ];
     final TextEditingController searchController = TextEditingController();
-    SideMenuController sideMenu = SideMenuController();
 
     return SafeArea(
       child: Scaffold(
         backgroundColor: ColorTheme.backgroundColor,
-        body: CustomScrollView(slivers: <Widget>[
-          SliverAppBar(
-            backgroundColor: ColorTheme.backgroundColor,
-            expandedHeight: 100,
-            collapsedHeight: 100,
-            floating: false,
-            pinned: true,
-            flexibleSpace: FlexibleSpaceBar(
-              centerTitle: true,
-              title: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: SearchBar(
-                    controller: searchController,
-                    hintText: 'Search destinations...'),
-              ),
+        body: Row(
+          children: [
+            Expanded(
+              child: CustomScrollView(slivers: <Widget>[
+                CustomSliverAppBar(
+                    searchController: searchController, categories: categories),
+                const SliverToBoxAdapter(
+                  child: Divider(),
+                ),
+                ProductsGrid(products: productsData),
+              ]),
             ),
-          ),
-          SliverToBoxAdapter(child: CategoriesMenu(categories: categories)),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 10, vertical: 4), // Añadir padding horizontal
-
-            sliver: ProductsGrid(cardsData: cardsData),
-          )
-        ]),
+            SizedBox(
+              width: 300,
+              child: ShoppingCart(items: cartItems),
+            ),
+          ],
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.pushNamed(context, 'addNewProduct');
+            Navigator.pushNamed(context, '/addNewProduct');
           },
           backgroundColor: ColorTheme.primaryColor,
           child: const Icon(Icons.add),

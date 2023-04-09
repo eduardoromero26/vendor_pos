@@ -70,13 +70,13 @@ class _MainLayoutState extends State<MainLayout> {
       'Personalizados'
     ];
     final TextEditingController searchController = TextEditingController();
-
     return SafeArea(
       child: Scaffold(
         backgroundColor: ColorTheme.backgroundColor,
         body: Row(
           children: [
-            Expanded(
+            Flexible(
+              flex: 1,
               child: CustomScrollView(
                   controller: _scrollController,
                   slivers: <Widget>[
@@ -87,14 +87,9 @@ class _MainLayoutState extends State<MainLayout> {
                       child: Divider(),
                     ),
                     productsProvider.isLoading
-                        ? const SliverFillRemaining(
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Expanded(
-                                child: CircularProgressIndicator(
-                                  color: ColorTheme.primaryColor,
-                                ),
-                              ),
+                        ? const SliverToBoxAdapter(
+                            child: CircularProgressIndicator(
+                              color: ColorTheme.primaryColor,
                             ),
                           )
                         : ProductsGrid(productsData: _products),

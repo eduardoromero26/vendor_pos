@@ -1,22 +1,20 @@
 import 'package:vendor_pos/providers/auth/auth_provider.dart';
-import 'package:vendor_pos/style/colors.dart';
 import 'package:vendor_pos/widgets/atoms/custom_text_field/custom_text_field.dart';
 import 'package:vendor_pos/widgets/atoms/cutom_buttons/custom_elevated_button.dart';
 import 'package:vendor_pos/widgets/atoms/cutom_buttons/custom_text_button.dart';
 import 'package:vendor_pos/widgets/atoms/text/wrap_text.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController =
+      TextEditingController(text: 'test@mail.com');
+  final TextEditingController _passwordController =
+      TextEditingController(text: '123456');
 
   LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    AuthProvider authProvider = Provider.of<AuthProvider>(context);
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -59,14 +57,13 @@ class LoginScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 40),
                         CustomElevatedButton(
-                            authProvider: authProvider,
                             emailController: _emailController,
                             passwordController: _passwordController),
                         const SizedBox(height: 30),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
+                          children: const [
+                            Text(
                               'Don\'t have an account?',
                               style: TextStyle(fontSize: 16),
                             ),

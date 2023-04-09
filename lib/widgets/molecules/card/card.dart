@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:vendor_pos/style/colors.dart';
 
 class CardWidget extends StatefulWidget {
@@ -43,82 +44,89 @@ class _CardWidgetState extends State<CardWidget> {
       fontSize: 14,
     );
 
-    return Expanded(
-      child: Card(
-        elevation: 4,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(BORDER_RADIUS)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(BORDER_RADIUS)),
-                  child: Image.network(
-                    widget.imageUrl,
-                    height: IMAGE_HEIGHT,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Positioned(
-                  top: 8,
-                  right: 8,
-                  child: Chip(
-                    elevation: 2,
-                    backgroundColor: ColorTheme.whiteColor,
-                    label: Text(
-                      '\$${widget.price.toStringAsFixed(2)}',
-                      style: const TextStyle(
-                          color: ColorTheme.primaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(BORDER_RADIUS)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Stack(
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(BORDER_RADIUS)),
+                child: CachedNetworkImage(
+                  imageUrl: widget.imageUrl,
+                  height: IMAGE_HEIGHT,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => const Center(
+                    child: SizedBox(
+                      width: 30.0,
+                      height: 30.0,
+                      child: CircularProgressIndicator(
+                        color: ColorTheme.primaryColor,
+                      ),
                     ),
                   ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(
-                  HORIZONTAL_PADDING, VERTICAL_PADDING, HORIZONTAL_PADDING, 0),
-              child: Text(
-                widget.title,
-                style: TITLE_STYLE,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(
-                  HORIZONTAL_PADDING, 0, HORIZONTAL_PADDING, VERTICAL_PADDING),
-              child: Text(
-                widget.subTitle,
-                style: SUBTITLE_STYLE,
-              ),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: HORIZONTAL_PADDING),
-              child: SizedBox(
-                height: 40,
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: widget.onAddToCart,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: ColorTheme.primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                  ),
-                  child: const Text(
-                    'Add to Cart',
-                    style: BUTTON_TEXT_STYLE,
+              Positioned(
+                top: 8,
+                right: 8,
+                child: Chip(
+                  elevation: 2,
+                  backgroundColor: ColorTheme.whiteColor,
+                  label: Text(
+                    '\$${widget.price.toStringAsFixed(2)}',
+                    style: const TextStyle(
+                        color: ColorTheme.primaryColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16),
                   ),
                 ),
               ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+                HORIZONTAL_PADDING, VERTICAL_PADDING, HORIZONTAL_PADDING, 0),
+            child: Text(
+              widget.title,
+              style: TITLE_STYLE,
             ),
-          ],
-        ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+                HORIZONTAL_PADDING, 0, HORIZONTAL_PADDING, VERTICAL_PADDING),
+            child: Text(
+              widget.subTitle,
+              style: SUBTITLE_STYLE,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: HORIZONTAL_PADDING),
+            child: SizedBox(
+              height: 40,
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: widget.onAddToCart,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ColorTheme.primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                ),
+                child: const Text(
+                  'Add to Cart',
+                  style: BUTTON_TEXT_STYLE,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

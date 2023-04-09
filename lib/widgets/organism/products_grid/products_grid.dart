@@ -28,17 +28,15 @@ class ProductsGrid extends StatelessWidget {
     return SliverGrid(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
-          return Flexible(
-            child: CardWidget(
-              title: productsData[index].name, // Título del producto
-              subTitle: productsData[index]
-                  .categories[0]
-                  .name
-                  .name, // Subtítulo del producto
-              imageUrl: productsData[index].images[0].src, // URL de la imagen
-              price: double.parse(productsData[index].price),
-              onAddToCart: () {},
-            ),
+          return CardWidget(
+            title: productsData[index].name, // Título del producto
+            subTitle: productsData[index]
+                .categories[0]
+                .name
+                .name, // Subtítulo del producto
+            imageUrl: productsData[index].images[0].src, // URL de la imagen
+            price: double.parse(productsData[index].price),
+            onAddToCart: () {},
           );
         },
         childCount: productsData.length,

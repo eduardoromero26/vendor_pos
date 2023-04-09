@@ -5,11 +5,13 @@ import 'package:vendor_pos/models/products_model.dart';
 import 'package:vendor_pos/service/base_Api/base_api.dart';
 
 class ProductService with BaseApi {
-  Future<dynamic> getProducts({int perPage = 100}) async {
+  Future<List<ProductsModel>> getProducts(
+      {int perPage = 25, int page = 1}) async {
     http.Response response = await executeHttpRequest(
       urlMethod: 'wp-json/wc/v3/products',
       queryParameters: {
         'per_page': perPage.toString(),
+        'page': page.toString(),
       },
     );
 

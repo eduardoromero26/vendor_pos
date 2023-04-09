@@ -3,20 +3,32 @@ import 'package:vendor_pos/models/products_model.dart';
 import 'package:vendor_pos/service/product_service.dart';
 
 class ProductsProvider extends ChangeNotifier {
-  List<ProductsModel> _products = [];
-
+  final List<ProductsModel> _products = [];
+  int _page = 1;
+  bool _isLoading = false;
+  bool _hasMoreProducts = true;
   List<ProductsModel> get products => _products;
+  bool get isLoading => _isLoading;
+  bool get hasMoreProducts => _hasMoreProducts;
 
-  Future<List<ProductsModel>> fetchProducts({int perPage = 100}) async {
+  Future<void> fetchProducts({int perPage = 25}) async {
+    if (_isLoading || !_hasMoreProducts) return;
+    _isLoading = true;
     try {
-      ProductService productService = ProductService();
       final fetchedProducts =
-          await productService.getProducts(perPage: perPage);
-      _products = fetchedProducts;
-      notifyListeners();
-      return _products;
+          await ProductService().getProducts(perPage: perPage, page: _page);
+
+      if (fetchedProducts.isEmpty) {
+        _hasMoreProducts = false;
+      } else {
+        _products.addAll(fetchedProducts);
+        _page++;
+      }
     } catch (error) {
       throw Exception('Failed to fetch products: $error');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
   }
 }

@@ -16,22 +16,36 @@ class MainLayout extends StatefulWidget {
 }
 
 class _MainLayoutState extends State<MainLayout> {
-  List<ProductsModel> _products = [];
+  late ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
-    Provider.of<ProductsProvider>(context, listen: false)
-        .fetchProducts()
-        .then((products) {
-      setState(() {
-        _products = products;
-      });
-    });
+    _scrollController = ScrollController();
+    _scrollController.addListener(_onScroll);
+    Provider.of<ProductsProvider>(context, listen: false).fetchProducts();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      Provider.of<ProductsProvider>(context, listen: false).fetchProducts();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final ProductsProvider productsProvider =
+        Provider.of<ProductsProvider>(context);
+    final List<ProductsModel> _products =
+        productsProvider.products; // Agrega esta línea
+
     final List<CartItem> cartItems = [
       const CartItem(
         imageUrl:
@@ -63,25 +77,28 @@ class _MainLayoutState extends State<MainLayout> {
         body: Row(
           children: [
             Expanded(
-              child: CustomScrollView(slivers: <Widget>[
-                CustomSliverAppBar(
-                    searchController: searchController, categories: categories),
-                const SliverToBoxAdapter(
-                  child: Divider(),
-                ),
-                _products.isNotEmpty
-                    ? ProductsGrid(productsData: _products)
-                    : const SliverFillRemaining(
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Expanded(
-                            child: CircularProgressIndicator(
-                              color: ColorTheme.primaryColor,
+              child: CustomScrollView(
+                  controller: _scrollController,
+                  slivers: <Widget>[
+                    CustomSliverAppBar(
+                        searchController: searchController,
+                        categories: categories),
+                    const SliverToBoxAdapter(
+                      child: Divider(),
+                    ),
+                    productsProvider.isLoading
+                        ? const SliverFillRemaining(
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Expanded(
+                                child: CircularProgressIndicator(
+                                  color: ColorTheme.primaryColor,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-              ]),
+                          )
+                        : ProductsGrid(productsData: _products),
+                  ]),
             ),
             SizedBox(
               width: 300,

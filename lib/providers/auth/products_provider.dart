@@ -9,8 +9,9 @@ class ProductsProvider extends ChangeNotifier {
 
   Future<List<ProductsModel>> fetchProducts({int perPage = 100}) async {
     try {
+      ProductService productService = ProductService();
       final fetchedProducts =
-          await ProductService.getProducts(perPage: perPage);
+          await productService.getProducts(perPage: perPage);
       _products = fetchedProducts;
       notifyListeners();
       return _products;

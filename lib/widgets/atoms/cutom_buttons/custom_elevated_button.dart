@@ -1,27 +1,21 @@
-import 'package:vendor_pos/providers/auth/auth_provider.dart';
 import 'package:vendor_pos/style/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   const CustomElevatedButton({
     super.key,
-    required this.authProvider,
     required TextEditingController emailController,
     required TextEditingController passwordController,
   })  : _emailController = emailController,
         _passwordController = passwordController;
 
-  final AuthProvider authProvider;
   final TextEditingController _emailController;
   final TextEditingController _passwordController;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
-        authProvider.loginWithEmailPassword(
-            _emailController.text, _passwordController.text, context);
-      },
+      onPressed: () {},
       style: ButtonStyle(
         backgroundColor:
             MaterialStateProperty.all<Color>(ColorTheme.primaryColor),

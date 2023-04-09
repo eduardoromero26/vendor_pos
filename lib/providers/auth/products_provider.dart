@@ -7,12 +7,13 @@ class ProductsProvider extends ChangeNotifier {
 
   List<ProductsModel> get products => _products;
 
-  Future<void> fetchProducts({int perPage = 100}) async {
+  Future<List<ProductsModel>> fetchProducts({int perPage = 100}) async {
     try {
       final fetchedProducts =
           await ProductService.getProducts(perPage: perPage);
       _products = fetchedProducts;
       notifyListeners();
+      return _products;
     } catch (error) {
       throw Exception('Failed to fetch products: $error');
     }

@@ -4,7 +4,6 @@ import 'package:vendor_pos/widgets/atoms/cutom_buttons/custom_elevated_button.da
 import 'package:vendor_pos/widgets/atoms/cutom_buttons/custom_text_button.dart';
 import 'package:vendor_pos/widgets/atoms/text/wrap_text.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController _emailController =
@@ -16,8 +15,6 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AuthProvider authProvider = Provider.of<AuthProvider>(context);
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -60,7 +57,6 @@ class LoginScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 40),
                         CustomElevatedButton(
-                            authProvider: authProvider,
                             emailController: _emailController,
                             passwordController: _passwordController),
                         const SizedBox(height: 30),

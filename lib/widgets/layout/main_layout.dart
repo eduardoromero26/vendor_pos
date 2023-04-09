@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vendor_pos/models/products_model.dart';
 import 'package:vendor_pos/providers/auth/products_provider.dart';
 import 'package:vendor_pos/style/colors.dart';
 import 'package:vendor_pos/widgets/molecules/cart_item/cart_item.dart';
@@ -8,24 +9,29 @@ import 'package:vendor_pos/widgets/organism/shopping_cart/shopping_cart.dart';
 import 'package:provider/provider.dart';
 
 class MainLayout extends StatefulWidget {
-  const MainLayout({super.key});
+  const MainLayout({key}) : super(key: key);
 
   @override
-  State<MainLayout> createState() => _MainLayoutState();
+  _MainLayoutState createState() => _MainLayoutState();
 }
 
 class _MainLayoutState extends State<MainLayout> {
+  List<ProductsModel> _products = [];
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<ProductsProvider>(context, listen: false).fetchProducts();
+    Provider.of<ProductsProvider>(context, listen: false)
+        .fetchProducts()
+        .then((products) {
+      setState(() {
+        _products = products;
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final productsData = Provider.of<ProductsProvider>(context).products;
     final List<CartItem> cartItems = [
       const CartItem(
         imageUrl:
@@ -63,7 +69,18 @@ class _MainLayoutState extends State<MainLayout> {
                 const SliverToBoxAdapter(
                   child: Divider(),
                 ),
-                ProductsGrid(products: productsData),
+                _products.isNotEmpty
+                    ? ProductsGrid(productsData: _products)
+                    : const SliverFillRemaining(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Expanded(
+                            child: CircularProgressIndicator(
+                              color: ColorTheme.primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
               ]),
             ),
             SizedBox(

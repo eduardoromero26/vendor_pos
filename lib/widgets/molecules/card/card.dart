@@ -1,28 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:vendor_pos/models/cart_model.dart';
+import 'package:vendor_pos/models/products_model.dart';
 import 'package:vendor_pos/style/colors.dart';
+import 'package:vendor_pos/widgets/atoms/cached_network_image/cached_network_image.dart';
 
-class CardWidget extends StatefulWidget {
-  final String title;
-  final String subTitle;
-  final String imageUrl;
-  final double price;
-  final VoidCallback onAddToCart;
+class CardWidget extends StatelessWidget {
+  final ProductsModel product;
+  void Function(CartItemModel) onAddToCart;
 
-  const CardWidget({
-    Key? key,
-    required this.title,
-    required this.subTitle,
-    required this.imageUrl,
-    required this.price,
+  CardWidget({
+    key,
     required this.onAddToCart,
+    required this.product,
   }) : super(key: key);
 
-  @override
-  _CardWidgetState createState() => _CardWidgetState();
-}
-
-class _CardWidgetState extends State<CardWidget> {
   @override
   Widget build(BuildContext context) {
     const double BORDER_RADIUS = 20.0;
@@ -53,25 +45,11 @@ class _CardWidgetState extends State<CardWidget> {
         children: [
           Stack(
             children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(BORDER_RADIUS)),
-                child: CachedNetworkImage(
-                  imageUrl: widget.imageUrl,
-                  height: IMAGE_HEIGHT,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) => const Center(
-                    child: SizedBox(
-                      width: 30.0,
-                      height: 30.0,
-                      child: CircularProgressIndicator(
-                        color: ColorTheme.primaryColor,
-                      ),
-                    ),
-                  ),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                ),
+              CustomCachedNetworkImage(
+                BORDER_RADIUS: BORDER_RADIUS,
+                product: product,
+                IMAGE_HEIGHT: IMAGE_HEIGHT,
+                IMAGE_WIDTH: double.infinity,
               ),
               Positioned(
                 top: 8,
@@ -80,7 +58,7 @@ class _CardWidgetState extends State<CardWidget> {
                   elevation: 2,
                   backgroundColor: ColorTheme.whiteColor,
                   label: Text(
-                    '\$${widget.price.toStringAsFixed(2)}',
+                    '\$${product.price}',
                     style: const TextStyle(
                         color: ColorTheme.primaryColor,
                         fontWeight: FontWeight.bold,
@@ -94,7 +72,7 @@ class _CardWidgetState extends State<CardWidget> {
             padding: const EdgeInsets.fromLTRB(
                 HORIZONTAL_PADDING, VERTICAL_PADDING, HORIZONTAL_PADDING, 0),
             child: Text(
-              widget.title,
+              product.name,
               style: TITLE_STYLE,
             ),
           ),
@@ -102,7 +80,7 @@ class _CardWidgetState extends State<CardWidget> {
             padding: const EdgeInsets.fromLTRB(
                 HORIZONTAL_PADDING, 0, HORIZONTAL_PADDING, VERTICAL_PADDING),
             child: Text(
-              widget.subTitle,
+              product.categories[0].name.name,
               style: SUBTITLE_STYLE,
             ),
           ),
@@ -112,7 +90,10 @@ class _CardWidgetState extends State<CardWidget> {
               height: 40,
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: widget.onAddToCart,
+                onPressed: () => onAddToCart(CartItemModel(
+                  product: product,
+                  quantity: 1,
+                )),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: ColorTheme.primaryColor,
                   shape: RoundedRectangleBorder(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:vendor_pos/models/cart_model.dart';
 import 'package:vendor_pos/models/products_model.dart';
-import 'package:vendor_pos/providers/auth/products_provider.dart';
+import 'package:vendor_pos/providers/cart_provider.dart';
+import 'package:vendor_pos/providers/products_provider.dart';
 import 'package:vendor_pos/style/colors.dart';
 import 'package:vendor_pos/widgets/molecules/cart_item/cart_item.dart';
 import 'package:vendor_pos/widgets/molecules/custom_app_bar/custom_sliver_app_bar.dart';
@@ -43,25 +45,10 @@ class _MainLayoutState extends State<MainLayout> {
   Widget build(BuildContext context) {
     final ProductsProvider productsProvider =
         Provider.of<ProductsProvider>(context);
-    final List<ProductsModel> _products =
-        productsProvider.products; // Agrega esta línea
+    final CartProvider cartProvider = Provider.of<CartProvider>(context);
 
-    final List<CartItem> cartItems = [
-      const CartItem(
-        imageUrl:
-            'https://minervajewelrymx.com/wp-content/uploads/2022/09/Curvy-Hoops-scaled.jpg',
-        title: 'Curvy hoops',
-        quantity: 2,
-        price: 150.0,
-      ),
-      const CartItem(
-        imageUrl:
-            'https://minervajewelrymx.com/wp-content/uploads/2022/09/Sugar-Boo-collar--scaled.jpg',
-        title: 'Sugar boo collar',
-        quantity: 1,
-        price: 250.0,
-      ),
-    ];
+    final List<ProductsModel> _products = productsProvider.products;
+
     final List<String> categories = [
       'Anillos',
       'Aretes',
@@ -76,7 +63,7 @@ class _MainLayoutState extends State<MainLayout> {
         body: Row(
           children: [
             Flexible(
-              flex: 1,
+              flex: 3,
               child: CustomScrollView(
                   controller: _scrollController,
                   slivers: <Widget>[
@@ -87,17 +74,36 @@ class _MainLayoutState extends State<MainLayout> {
                       child: Divider(),
                     ),
                     productsProvider.isLoading
-                        ? const SliverToBoxAdapter(
-                            child: CircularProgressIndicator(
-                              color: ColorTheme.primaryColor,
+                        ? const SliverFillRemaining(
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: ColorTheme.primaryColor,
+                              ),
                             ),
                           )
-                        : ProductsGrid(productsData: _products),
+                        : ProductsGrid(
+                            productsData: _products,
+                            onAddToCart: cartProvider.addToCart,
+                          ),
                   ]),
             ),
-            SizedBox(
-              width: 300,
-              child: ShoppingCart(items: cartItems),
+            Expanded(
+              flex: 1,
+              child: Consumer<CartProvider>(
+                builder: (context, cartProvider, child) {
+                  final items = cartProvider.items;
+                  final totalPrice = cartProvider.totalPrice;
+
+                  return ShoppingCartWidget(
+                    items: cartProvider.items,
+                    totalPrice: cartProvider.totalPrice,
+                    onIncrement: (index) => cartProvider
+                        .incrementQuantity(cartProvider.items[index]),
+                    onDecrement: (index) => cartProvider
+                        .decrementQuantity(cartProvider.items[index]),
+                  );
+                },
+              ),
             ),
           ],
         ),

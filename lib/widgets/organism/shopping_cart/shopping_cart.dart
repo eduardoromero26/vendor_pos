@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:vendor_pos/models/cart_model.dart';
 import 'package:vendor_pos/style/colors.dart';
 import 'package:vendor_pos/widgets/molecules/cart_item/cart_item.dart';
 
-class ShoppingCart extends StatelessWidget {
-  final List<CartItem> items;
+class ShoppingCartWidget extends StatelessWidget {
+  final List<CartItemModel> items;
+  final double totalPrice;
+  final void Function(int index) onIncrement;
+  final void Function(int index) onDecrement;
 
-  const ShoppingCart({required this.items});
-
-  double get totalPrice =>
-      items.fold(0, (sum, item) => sum + item.price * item.quantity);
+  const ShoppingCartWidget({
+    Key? key,
+    required this.items,
+    required this.totalPrice,
+    required this.onIncrement,
+    required this.onDecrement,
+  }) : super(key: key);
 
   static const double BORDER_RADIUS = 10.0;
   static const TextStyle TOTAL_PRICE_STYLE = TextStyle(
@@ -28,7 +35,12 @@ class ShoppingCart extends StatelessWidget {
             child: ListView.builder(
               itemCount: items.length,
               itemBuilder: (context, index) {
-                return items[index];
+                return CartItem(
+                  cartItem: items[index],
+                  onRemove: () {},
+                  onIncrement: () => onIncrement(index),
+                  onDecrement: () => onDecrement(index),
+                );
               },
             ),
           ),

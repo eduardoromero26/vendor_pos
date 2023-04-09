@@ -1,4 +1,4 @@
-import 'package:vendor_pos/providers/auth/auth_provider.dart';
+import 'package:vendor_pos/providers/auth_provider.dart';
 import 'package:vendor_pos/widgets/atoms/custom_text_field/custom_text_field.dart';
 import 'package:vendor_pos/widgets/atoms/cutom_buttons/custom_elevated_button.dart';
 import 'package:vendor_pos/widgets/atoms/cutom_buttons/custom_text_button.dart';

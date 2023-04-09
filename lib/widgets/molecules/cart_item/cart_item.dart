@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:vendor_pos/models/cart_model.dart';
 import 'package:vendor_pos/style/colors.dart';
+import 'package:vendor_pos/widgets/atoms/cached_network_image/cached_network_image.dart';
 
 class CartItem extends StatelessWidget {
-  final String imageUrl;
-  final String title;
-  final int quantity;
-  final double price;
+  final CartItemModel cartItem;
+  final void Function() onIncrement;
+  final void Function() onDecrement;
 
   const CartItem({
-    required this.imageUrl,
-    required this.title,
-    required this.quantity,
-    required this.price,
+    super.key,
+    required this.cartItem,
+    required void Function() onRemove,
+    required this.onIncrement,
+    required this.onDecrement,
   });
 
   static const double BORDER_RADIUS = 10.0;
@@ -42,14 +44,11 @@ class CartItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(BORDER_RADIUS),
-            child: Image.network(
-              imageUrl,
-              height: 70,
-              width: 70,
-              fit: BoxFit.cover,
-            ),
+          CustomCachedNetworkImage(
+            BORDER_RADIUS: BORDER_RADIUS,
+            product: cartItem.product,
+            IMAGE_HEIGHT: 70,
+            IMAGE_WIDTH: 70,
           ),
           const SizedBox(width: 8),
           Expanded(
@@ -58,7 +57,7 @@ class CartItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  title,
+                  cartItem.product.name,
                   style: TITLE_STYLE,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -74,17 +73,17 @@ class CartItem extends StatelessWidget {
                     children: [
                       IconButton(
                         onPressed: () {
-                          // Añade la lógica para disminuir la cantidad aquí
+                          onDecrement();
                         },
                         icon: const Icon(Icons.remove,
                             color: ColorTheme.secondaryColor, size: 16),
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(),
                       ),
-                      Text('$quantity', style: QUANTITY_STYLE),
+                      Text('${cartItem.quantity}', style: QUANTITY_STYLE),
                       IconButton(
                         onPressed: () {
-                          // Añade la lógica para aumentar la cantidad aquí
+                          onIncrement();
                         },
                         icon: const Icon(Icons.add,
                             color: ColorTheme.secondaryColor, size: 16),
@@ -99,7 +98,7 @@ class CartItem extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           Text(
-            '\$${price * quantity}',
+            '\$${(double.parse(cartItem.product.price) * cartItem.quantity).toStringAsFixed(2)}',
             style: PRICE_STYLE.copyWith(fontWeight: FontWeight.w900),
             overflow: TextOverflow.ellipsis,
           ),

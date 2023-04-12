@@ -6,6 +6,7 @@ import 'package:vendor_pos/utils/env.dart';
 import 'package:vendor_pos/widgets/layout/main_layout.dart';
 
 import 'providers/cart_provider.dart';
+import 'providers/categories_provider.dart';
 
 Map<String, String>? env;
 
@@ -16,6 +17,7 @@ void main() async {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => ProductsProvider()),
     ChangeNotifierProvider(create: (_) => CartProvider()),
+    ChangeNotifierProvider(create: (_) => CategoriesProvider()),
   ], child: const MyApp()));
 }
 

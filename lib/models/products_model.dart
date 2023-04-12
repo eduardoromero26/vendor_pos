@@ -126,7 +126,7 @@ class ProductsModel {
   List<dynamic> crossSellIds;
   int parentId;
   String purchaseNote;
-  List<Category> categories;
+  List<CategoryModel> categories;
   List<dynamic> tags;
   List<Image> images;
   List<dynamic> attributes;
@@ -211,8 +211,8 @@ class ProductsModel {
       crossSellIds: List<int>.from(json['cross_sell_ids'].map((x) => x)),
       parentId: json['parent_id'],
       purchaseNote: json['purchase_note'],
-      categories: List<Category>.from(
-          json['categories'].map((x) => Category.fromJson(x))),
+      categories: List<CategoryModel>.from(
+          json['categories'].map((x) => CategoryModel.fromJson(x))),
       tags: json['tags'],
       images: List<Image>.from(json['images'].map((x) => Image.fromJson(x))),
       attributes: json['attributes'],
@@ -237,8 +237,8 @@ enum Backorders { NO }
 
 enum CatalogVisibility { VISIBLE }
 
-class Category {
-  Category({
+class CategoryModel {
+  CategoryModel({
     required this.id,
     required this.name,
     required this.slug,
@@ -248,7 +248,7 @@ class Category {
   CategoryName name;
   CategorySlug slug;
 
-  factory Category.fromJson(Map<String, dynamic> json) => Category(
+  factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
         id: json['id'],
         name: CategoryName.values.firstWhereOrNull(
                 (e) => e.toString() == 'CategoryName.${json['name']}') ??

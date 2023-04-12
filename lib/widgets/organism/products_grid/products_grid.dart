@@ -3,15 +3,21 @@ import 'package:vendor_pos/models/cart_model.dart';
 import 'package:vendor_pos/models/products_model.dart';
 import 'package:vendor_pos/widgets/molecules/card/card.dart';
 
-class ProductsGrid extends StatelessWidget {
+class ProductsGrid extends StatefulWidget {
   final List<ProductsModel> productsData;
   void Function(CartItemModel) onAddToCart;
+
   ProductsGrid({
     key,
     required this.productsData,
     required this.onAddToCart,
   }) : super(key: key);
 
+  @override
+  State<ProductsGrid> createState() => _ProductsGridState();
+}
+
+class _ProductsGridState extends State<ProductsGrid> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -49,11 +55,11 @@ class ProductsGrid extends StatelessWidget {
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
             return CardWidget(
-              product: productsData[index],
-              onAddToCart: onAddToCart,
+              product: widget.productsData[index],
+              onAddToCart: widget.onAddToCart,
             );
           },
-          childCount: productsData.length,
+          childCount: widget.productsData.length,
         ),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: crossAxisCount,

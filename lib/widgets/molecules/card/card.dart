@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:vendor_pos/models/cart_model.dart';
 import 'package:vendor_pos/models/products_model.dart';
 import 'package:vendor_pos/style/colors.dart';
@@ -80,7 +79,7 @@ class CardWidget extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(
                 HORIZONTAL_PADDING, 0, HORIZONTAL_PADDING, VERTICAL_PADDING),
             child: Text(
-              product.categories[0].name.name,
+              product.categories[0].name.toString(),
               style: SUBTITLE_STYLE,
             ),
           ),

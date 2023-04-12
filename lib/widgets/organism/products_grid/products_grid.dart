@@ -43,21 +43,24 @@ class ProductsGrid extends StatelessWidget {
     }
     cardWidth = screenWidth / crossAxisCount;
 
-    return SliverGrid(
-      delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) {
-          return CardWidget(
-            product: productsData[index],
-            onAddToCart: onAddToCart,
-          );
-        },
-        childCount: productsData.length,
-      ),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: crossAxisCount,
-        childAspectRatio: childAspectRatio,
-        mainAxisSpacing: 16,
-        crossAxisSpacing: 16,
+    return SliverPadding(
+      padding: const EdgeInsets.all(12.0),
+      sliver: SliverGrid(
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+            return CardWidget(
+              product: productsData[index],
+              onAddToCart: onAddToCart,
+            );
+          },
+          childCount: productsData.length,
+        ),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: crossAxisCount,
+          childAspectRatio: childAspectRatio,
+          mainAxisSpacing: 16,
+          crossAxisSpacing: 16,
+        ),
       ),
     );
   }

@@ -11,12 +11,17 @@ class ProductsProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   bool get hasMoreProducts => _hasMoreProducts;
 
-  Future<void> fetchProducts({int perPage = 25}) async {
+  Future<void> fetchProducts({int perPage = 25, String? searchQuery}) async {
     if (_isLoading || !_hasMoreProducts) return;
     _isLoading = true;
+
+    if (searchQuery != null) {
+      _products.clear();
+      _page = 1;
+    }
     try {
-      final fetchedProducts =
-          await ProductService().getProducts(perPage: perPage, page: _page);
+      final fetchedProducts = await ProductService()
+          .getProducts(perPage: perPage, page: _page, searchQuery: searchQuery);
 
       if (fetchedProducts.isEmpty) {
         _hasMoreProducts = false;
@@ -26,6 +31,23 @@ class ProductsProvider extends ChangeNotifier {
       }
     } catch (error) {
       throw Exception('Failed to fetch products: $error');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> searchProducts(String query) async {
+    if (_isLoading) return;
+    _isLoading = true;
+
+    try {
+      final fetchedProducts =
+          await ProductService().searchProducts(query: query);
+      _products.clear();
+      _products.addAll(fetchedProducts);
+    } catch (error) {
+      throw Exception('Failed to search products: $error');
     } finally {
       _isLoading = false;
       notifyListeners();

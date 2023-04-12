@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:vendor_pos/models/cart_model.dart';
 import 'package:vendor_pos/models/products_model.dart';
 import 'package:vendor_pos/providers/cart_provider.dart';
+import 'package:vendor_pos/providers/categories_provider.dart';
 import 'package:vendor_pos/providers/products_provider.dart';
 import 'package:vendor_pos/style/colors.dart';
-import 'package:vendor_pos/widgets/molecules/cart_item/cart_item.dart';
 import 'package:vendor_pos/widgets/molecules/custom_app_bar/custom_sliver_app_bar.dart';
 import 'package:vendor_pos/widgets/organism/products_grid/products_grid.dart';
 import 'package:vendor_pos/widgets/organism/shopping_cart/shopping_cart.dart';
@@ -26,6 +25,7 @@ class _MainLayoutState extends State<MainLayout> {
     _scrollController = ScrollController();
     _scrollController.addListener(_onScroll);
     Provider.of<ProductsProvider>(context, listen: false).fetchProducts();
+    Provider.of<CategoriesProvider>(context, listen: false).fetchCategories();
   }
 
   @override
@@ -41,21 +41,20 @@ class _MainLayoutState extends State<MainLayout> {
     }
   }
 
+  void _handleProducts(String searchQuery) {
+    Provider.of<ProductsProvider>(context, listen: false)
+        .fetchProducts(searchQuery: searchQuery);
+  }
+
   @override
   Widget build(BuildContext context) {
     final ProductsProvider productsProvider =
         Provider.of<ProductsProvider>(context);
     final CartProvider cartProvider = Provider.of<CartProvider>(context);
-
     final List<ProductsModel> _products = productsProvider.products;
+    final categories = Provider.of<CategoriesProvider>(context).categories;
+    int _selectedCategoryId = 0;
 
-    final List<String> categories = [
-      'Anillos',
-      'Aretes',
-      'Collares',
-      'Pulseras',
-      'Personalizados'
-    ];
     final TextEditingController searchController = TextEditingController();
     return SafeArea(
       child: Scaffold(
@@ -68,8 +67,15 @@ class _MainLayoutState extends State<MainLayout> {
                   controller: _scrollController,
                   slivers: <Widget>[
                     CustomSliverAppBar(
-                        searchController: searchController,
-                        categories: categories),
+                      searchController: searchController,
+                      categories: categories,
+                      onSearch: (String query) {
+                        setState(() {
+                          _handleProducts(query);
+                        });
+                      },
+                      onCategorySelected: (int) {},
+                    ),
                     const SliverToBoxAdapter(
                       child: Divider(),
                     ),

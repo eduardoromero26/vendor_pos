@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:vendor_pos/models/category_model.dart';
 import 'package:vendor_pos/style/colors.dart';
 
 class CustomSliverAppBar extends StatefulWidget {
   final TextEditingController searchController;
-  final List<String> categories;
+  final List<CategoryModel> categories;
+  final void Function(String) onSearch;
+  final void Function(int) onCategorySelected;
 
   const CustomSliverAppBar({
+    super.key,
     required this.searchController,
     required this.categories,
+    required this.onSearch,
+    required this.onCategorySelected,
   });
 
   @override
@@ -56,13 +62,12 @@ class _CustomSliverAppBarState extends State<CustomSliverAppBar> {
                     decoration: InputDecoration(
                       hintText: 'Search products...',
                       border: InputBorder.none,
-                      prefixIcon: const Icon(Icons.search),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 16),
                       suffixIcon: IconButton(
-                        icon: const Icon(Icons.send),
-                        onPressed: () {
-                          // Aquí puedes manejar el evento de envío, por ejemplo:
-                          // print(widget.searchController.text);
-                        },
+                        icon: const Icon(Icons.search),
+                        onPressed: () =>
+                            widget.onSearch(widget.searchController.text),
                       ),
                     ),
                   ),
@@ -76,12 +81,10 @@ class _CustomSliverAppBarState extends State<CustomSliverAppBar> {
                     scrollDirection: Axis.horizontal,
                     itemCount: widget.categories.length,
                     itemBuilder: (BuildContext context, int index) {
-                      final category = widget.categories[index];
+                      final category = widget.categories[index].name;
                       return InkWell(
                         onTap: () {
-                          setState(() {
-                            _selectedIndex = index;
-                          });
+                          widget.onCategorySelected(index);
                         },
                         child: Padding(
                           padding: EdgeInsets.symmetric(

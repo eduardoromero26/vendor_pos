@@ -3,6 +3,7 @@ import 'package:vendor_pos/models/products_model.dart';
 import 'package:vendor_pos/providers/cart_provider.dart';
 import 'package:vendor_pos/providers/categories_provider.dart';
 import 'package:vendor_pos/providers/products_provider.dart';
+import 'package:vendor_pos/screens/home/home_screen.dart';
 import 'package:vendor_pos/style/colors.dart';
 import 'package:vendor_pos/widgets/molecules/custom_app_bar/custom_sliver_app_bar.dart';
 import 'package:vendor_pos/widgets/organism/products_grid/products_grid.dart';
@@ -48,10 +49,7 @@ class _MainLayoutState extends State<MainLayout> {
 
   @override
   Widget build(BuildContext context) {
-    final ProductsProvider productsProvider =
-        Provider.of<ProductsProvider>(context);
     final CartProvider cartProvider = Provider.of<CartProvider>(context);
-    final List<ProductsModel> _products = productsProvider.products;
     final categories = Provider.of<CategoriesProvider>(context).categories;
     int _selectedCategoryId = 0;
 
@@ -79,18 +77,7 @@ class _MainLayoutState extends State<MainLayout> {
                     const SliverToBoxAdapter(
                       child: Divider(),
                     ),
-                    productsProvider.isLoading
-                        ? const SliverFillRemaining(
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                color: ColorTheme.primaryColor,
-                              ),
-                            ),
-                          )
-                        : ProductsGrid(
-                            productsData: _products,
-                            onAddToCart: cartProvider.addToCart,
-                          ),
+                    HomeScreen(),
                   ]),
             ),
             Expanded(
@@ -112,13 +99,6 @@ class _MainLayoutState extends State<MainLayout> {
               ),
             ),
           ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/addNewProduct');
-          },
-          backgroundColor: ColorTheme.primaryColor,
-          child: const Icon(Icons.add),
         ),
       ),
     );

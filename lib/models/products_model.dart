@@ -250,18 +250,20 @@ class CategoryModel {
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
         id: json['id'],
-        name: CategoryName.values.firstWhereOrNull(
-                (e) => e.toString() == 'CategoryName.${json['name']}') ??
+        name: CategoryName.values.firstWhereOrNull((e) =>
+                e.toString().split('.').last.toLowerCase() ==
+                json['name'].toString().toLowerCase()) ??
             CategoryName.COLLARES,
-        slug: CategorySlug.values.firstWhereOrNull(
-                (e) => e.toString() == 'CategorySlug.${json['slug']}') ??
+        slug: CategorySlug.values.firstWhereOrNull((e) =>
+                e.toString().split('.').last.toLowerCase() ==
+                json['slug'].toString().toLowerCase()) ??
             CategorySlug.COLLARES,
       );
 }
 
-enum CategoryName { COLLARES, ANILLOS, PULSERAS }
+enum CategoryName { COLLARES, ANILLOS, PULSERAS, ARETES, PERSONALIZADOS }
 
-enum CategorySlug { COLLARES, ANILLOS, PULSERAS }
+enum CategorySlug { COLLARES, ANILLOS, PULSERAS, ARETES, PERSONALIZADOS }
 
 class Dimensions {
   Dimensions({

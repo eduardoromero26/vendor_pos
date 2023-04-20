@@ -53,4 +53,30 @@ class ProductsProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  // En ProductsProvider
+  Future<void> fetchProductsByCategory(int categoryId) async {
+    if (_isLoading || !_hasMoreProducts) return;
+    _isLoading = true;
+
+    _products.clear();
+    _page = 1;
+
+    try {
+      final fetchedProducts =
+          await ProductService().getProductsByCategory(categoryId: categoryId);
+
+      if (fetchedProducts.isEmpty) {
+        _hasMoreProducts = false;
+      } else {
+        _products.addAll(fetchedProducts);
+        _page++;
+      }
+    } catch (error) {
+      throw Exception('Failed to fetch products by category: $error');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
 }

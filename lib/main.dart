@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vendor_pos/providers/products_provider.dart';
 import 'package:vendor_pos/screens/auth/login/login_screen.dart';
+import 'package:vendor_pos/screens/home/home_screen.dart';
 import 'package:vendor_pos/utils/env.dart';
-import 'package:vendor_pos/widgets/layout/main_layout.dart';
 
 import 'providers/cart_provider.dart';
 import 'providers/categories_provider.dart';
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: '/',
         routes: {
-          '/': (context) => const MainLayout(),
+          '/': (context) => const HomeScreen(),
           '/loginScreen': (context) => LoginScreen(),
         });
   }

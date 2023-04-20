@@ -79,7 +79,7 @@ class CardWidget extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(
                 HORIZONTAL_PADDING, 0, HORIZONTAL_PADDING, VERTICAL_PADDING),
             child: Text(
-              product.categories[0].name.toString(),
+              product.categories[0].slug.name,
               style: SUBTITLE_STYLE,
             ),
           ),

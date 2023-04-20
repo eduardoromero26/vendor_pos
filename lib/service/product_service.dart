@@ -41,12 +41,15 @@ class ProductService with BaseApi {
     return filteredProducts;
   }
 
-  Future<List<ProductsModel>> getProductsByCategory(
-      {required String categorySlug}) async {
+  Future<List<ProductsModel>> getProductsByCategory({
+    required int categoryId,
+    int perPage = 25,
+  }) async {
     http.Response response = await executeHttpRequest(
       urlMethod: 'wp-json/wc/v3/products',
       queryParameters: {
-        'category': categorySlug,
+        'per_page': perPage.toString(),
+        'category': categoryId.toString(),
       },
     );
 

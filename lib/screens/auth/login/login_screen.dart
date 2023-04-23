@@ -1,3 +1,4 @@
+import 'package:provider/provider.dart';
 import 'package:vendor_pos/providers/auth_provider.dart';
 import 'package:vendor_pos/widgets/atoms/custom_text_field/custom_text_field.dart';
 import 'package:vendor_pos/widgets/atoms/cutom_buttons/custom_elevated_button.dart';
@@ -7,14 +8,15 @@ import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController _emailController =
-      TextEditingController(text: 'test@mail.com');
+      TextEditingController(text: 'ventas@minervajewelrymx.com');
   final TextEditingController _passwordController =
-      TextEditingController(text: '123456');
+      TextEditingController(text: 'MinervaJewelry2023@!');
 
   LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -57,8 +59,12 @@ class LoginScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 40),
                         CustomElevatedButton(
-                            emailController: _emailController,
-                            passwordController: _passwordController),
+                          onPressed: () {
+                            authProvider.login(context, _emailController.text,
+                                _passwordController.text);
+                          },
+                          text: 'Login',
+                        ),
                         const SizedBox(height: 30),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,

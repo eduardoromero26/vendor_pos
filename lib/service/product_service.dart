@@ -1,11 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:vendor_pos/models/category_model.dart';
-
 import 'package:vendor_pos/models/products_model.dart';
-import 'package:vendor_pos/service/base_Api/base_api.dart';
+import 'package:vendor_pos/service/base_Api/woocommerce_base_api.dart';
 
-class ProductService with BaseApi {
+class ProductService with WooCommerceBaseApi {
   Future<List<ProductsModel>> getProducts(
       {int perPage = 25, int page = 1, String? searchQuery}) async {
     Map<String, String> queryParameters = {

@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'package:vendor_pos/service/base_Api/base_api.dart';
+import 'package:vendor_pos/service/base_Api/woocommerce_base_api.dart';
 
 import 'package:vendor_pos/models/category_model.dart';
 import 'package:http/http.dart' as http;
 
-class CategoriesService with BaseApi {
+class CategoriesService with WooCommerceBaseApi {
   Future<List<CategoryModel>> getCategories() async {
     http.Response response = await executeHttpRequest(
       urlMethod: 'wp-json/wc/v3/products/categories',

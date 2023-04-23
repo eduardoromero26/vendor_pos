@@ -2,20 +2,20 @@ import 'package:vendor_pos/style/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomElevatedButton extends StatelessWidget {
+  final Function onPressed;
+  final String text;
   const CustomElevatedButton({
+    required this.onPressed,
     super.key,
-    required TextEditingController emailController,
-    required TextEditingController passwordController,
-  })  : _emailController = emailController,
-        _passwordController = passwordController;
-
-  final TextEditingController _emailController;
-  final TextEditingController _passwordController;
+    required this.text,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+        onPressed();
+      },
       style: ButtonStyle(
         backgroundColor:
             MaterialStateProperty.all<Color>(ColorTheme.primaryColor),
@@ -27,8 +27,8 @@ class CustomElevatedButton extends StatelessWidget {
           ),
         ),
       ),
-      child: const Text(
-        'Log in',
+      child: Text(
+        text,
         style: TextStyle(fontSize: 16),
       ),
     );

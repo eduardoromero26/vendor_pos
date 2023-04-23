@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:vendor_pos/providers/product_create_provider.dart';
 import 'package:vendor_pos/providers/products_provider.dart';
+import 'package:vendor_pos/routes/route_generator.dart';
 import 'package:vendor_pos/screens/auth/login/login_screen.dart';
 import 'package:vendor_pos/screens/home/home_screen.dart';
 import 'package:vendor_pos/utils/env.dart';
 
 import 'providers/cart_provider.dart';
 import 'providers/categories_provider.dart';
+import 'screens/products/create_product_screen.dart';
 
 Map<String, String>? env;
 
@@ -18,6 +21,7 @@ void main() async {
     ChangeNotifierProvider(create: (_) => ProductsProvider()),
     ChangeNotifierProvider(create: (_) => CartProvider()),
     ChangeNotifierProvider(create: (_) => CategoriesProvider()),
+    ChangeNotifierProvider(create: (_) => ProductCreateProvider()),
   ], child: const MyApp()));
 }
 
@@ -27,15 +31,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Vendor - POS',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        initialRoute: '/',
-        routes: {
-          '/': (context) => const HomeScreen(),
-          '/loginScreen': (context) => LoginScreen(),
-        });
+      title: 'Vendor - POS',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      initialRoute: '/',
+      onGenerateRoute: RouteGenerator.generateRoute,
+    );
   }
 }

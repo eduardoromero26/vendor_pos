@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:vendor_pos/service/base_Api/base_api.dart';
-
 import 'package:vendor_pos/models/category_model.dart';
 import 'package:http/http.dart' as http;
 

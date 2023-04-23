@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:vendor_pos/models/category_model.dart';
 import 'package:vendor_pos/models/products_model.dart';
 import 'package:vendor_pos/providers/cart_provider.dart';
 import 'package:vendor_pos/providers/categories_provider.dart';
 import 'package:vendor_pos/providers/products_provider.dart';
+import 'package:vendor_pos/screens/home/home_controller.dart';
 import 'package:vendor_pos/style/colors.dart';
 import 'package:vendor_pos/widgets/molecules/custom_app_bar/custom_sliver_app_bar.dart';
 import 'package:vendor_pos/widgets/organism/products_grid/products_grid.dart';
@@ -19,47 +19,22 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late ScrollController _scrollController;
-  int _selectedCategoryId = 0;
+  HomeController _homeController = HomeController();
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-    _scrollController.addListener(_onScroll);
+    _scrollController.addListener(
+        () => _homeController.onScroll(context, _scrollController));
     Provider.of<ProductsProvider>(context, listen: false).fetchProducts();
     Provider.of<CategoriesProvider>(context, listen: false).fetchCategories();
-    final categories =
-        Provider.of<CategoriesProvider>(context, listen: false).categories;
-
-    for (final category in categories) {
-      category.isSelected = false;
-    }
-    if (categories.isNotEmpty && categories[0].name != 'Sin categorizar') {
-      categories[0].isSelected = true;
-    }
   }
 
   @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
-  }
-
-  void _onScroll() {
-    if (_scrollController.position.pixels ==
-        _scrollController.position.maxScrollExtent) {
-      if (_selectedCategoryId == -1 || _selectedCategoryId == 0) {
-        Provider.of<ProductsProvider>(context, listen: false).fetchProducts();
-      } else {
-        Provider.of<ProductsProvider>(context, listen: false)
-            .fetchProductsByCategory(_selectedCategoryId);
-      }
-    }
-  }
-
-  void _handleProducts(String searchQuery) {
-    Provider.of<ProductsProvider>(context, listen: false)
-        .fetchProducts(searchQuery: searchQuery);
   }
 
   @override
@@ -69,28 +44,17 @@ class _HomeScreenState extends State<HomeScreen> {
     final CartProvider cartProvider = Provider.of<CartProvider>(context);
     final List<ProductsModel> products = productsProvider.products;
     final categories = Provider.of<CategoriesProvider>(context).categories;
-
     final TextEditingController searchController = TextEditingController();
-
-    void _handleCategorySearch(category) {
-      setState(() {
-        if (_selectedCategoryId == category.id) {
-          _selectedCategoryId = -1;
-        } else {
-          _selectedCategoryId = category.id;
-        }
-      });
-      if (_selectedCategoryId == -1) {
-        Provider.of<ProductsProvider>(context, listen: false).fetchProducts();
-      } else {
-        Provider.of<ProductsProvider>(context, listen: false)
-            .fetchProductsByCategory(_selectedCategoryId);
-      }
-    }
 
     return SafeArea(
       child: Scaffold(
         backgroundColor: ColorTheme.backgroundColor,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/create-product');
+          },
+          child: Icon(Icons.add),
+        ),
         body: Row(
           children: [
             Flexible(
@@ -103,14 +67,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       categories: categories,
                       onSearch: (String query) {
                         setState(() {
-                          _handleProducts(query);
+                          _homeController.handleProducts(context, query);
                         });
                       },
                       onCategorySelected: (int index) {
                         setState(() {
-                          _selectedCategoryId = index;
+                          _homeController.handleCategorySearch(
+                              context, categories[index].id);
                         });
-                        _handleCategorySearch(categories[index]);
                       },
                     ),
                     const SliverToBoxAdapter(

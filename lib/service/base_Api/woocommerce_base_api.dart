@@ -5,7 +5,7 @@ import 'package:vendor_pos/utils/constants.dart';
 import 'dart:convert' as json;
 import '../../main.dart';
 
-mixin BaseApi {
+mixin WooCommerceBaseApi {
   Future<http.Response> executeHttpRequest({
     required String urlMethod,
     String method = HttpMethod.GET,

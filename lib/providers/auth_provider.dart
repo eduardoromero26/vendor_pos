@@ -23,20 +23,19 @@ class AuthProvider with ChangeNotifier {
       final result = await _loginService.loginUserService(username, password);
       if (result) {
         _isLoggedIn = true;
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Login successful'),
-          ),
-        );
-        await _storage.write(key: 'isLoggedIn', value: 'true');
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   const SnackBar(
+        //     content: Text('Login successful'),
+        //   ),
+        // );
         Navigator.pushNamed(context, '/');
         notifyListeners();
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Invalid username or password'),
-          ),
-        );
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   const SnackBar(
+        //     content: Text('Invalid username or password'),
+        //   ),
+        // );
       }
       return result;
     } catch (e) {

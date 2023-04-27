@@ -19,10 +19,21 @@ class CustomCachedNetworkImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String imageUrl;
+
+    // Comprobar si la lista de imágenes no está vacía
+    if (product.images.isNotEmpty) {
+      imageUrl = product.images[0].src;
+    } else {
+      // Proporcione una URL de imagen predeterminada en caso de que la lista esté vacía
+      imageUrl =
+          'https://minervajewelrymx.com/wp-content/uploads/woocommerce-placeholder.png';
+    }
+
     return ClipRRect(
       borderRadius: BorderRadius.vertical(top: Radius.circular(BORDER_RADIUS)),
       child: CachedNetworkImage(
-        imageUrl: product.images[0].src,
+        imageUrl: imageUrl,
         height: IMAGE_HEIGHT,
         width: IMAGE_WIDTH,
         fit: BoxFit.cover,

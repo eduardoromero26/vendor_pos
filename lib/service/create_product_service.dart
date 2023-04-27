@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:vendor_pos/service/base_Api/base_api.dart';
+import 'package:vendor_pos/service/base_Api/woocommerce_base_api.dart';
 
-class CreateNewProductService with BaseApi {
+class CreateNewProductService with WooCommerceBaseApi {
   Future<Map<String, dynamic>> createNewProduct(
       Map<String, dynamic> productData) async {
     http.Response response = await executeHttpRequest(

@@ -1,40 +1,50 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:vendor_pos/service/base_Api/base_api.dart';
+import 'package:vendor_pos/main.dart';
+import 'package:vendor_pos/service/base_Api/wordpress_base_api.dart';
 
-class ImageUploadService with BaseApi {
-  Future<List<String>> uploadImages(List<XFile> images) async {
-    List<String> uploadedImagePaths = [];
+class ImageUploadService with WordpressBaseApi {
+  Future<String> uploadImage(XFile image, String fileName) async {
+    String uploadedImagePath = '';
 
-    final response = await executeHttpRequest(
-      urlMethod: 'wp-json/wp/v2/media',
-      method: HttpMethod.POST,
-      body: await _createRequestBody(images),
-    );
+    try {
+      final requestBody = await _createRequestBody(image);
+      final customRequest = http.MultipartRequest(
+        'POST',
+        Uri.parse('${env!['WORDPRESS_URL']}wp-json/wp/v2/media'),
+      );
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
+      customRequest.files.add(requestBody);
+
+      final response = await executeHttpRequest(
+        urlMethod: 'wp-json/wp/v2/media',
+        method: HttpMethod.POST,
+        customRequest: customRequest,
+      );
+
       var responseBody = json.decode(response.body);
-      uploadedImagePaths = List<String>.from(responseBody["data"]["path"]);
-    } else {
-      throw Exception(
-          'Failed to upload images. Status code: ${response.statusCode}');
-    }
+      print('Response from server: $responseBody');
 
-    return uploadedImagePaths;
+      if (responseBody != null &&
+          responseBody["guid"] != null &&
+          responseBody["guid"]["rendered"] != null) {
+        uploadedImagePath = responseBody["guid"]["rendered"];
+      } else {
+        throw Exception('Invalid response from server');
+      }
+    } on WordpressBaseApi catch (e) {}
+
+    return uploadedImagePath;
   }
 
-  Future<Map<String, dynamic>> _createRequestBody(List<XFile> images) async {
-    Map<String, dynamic> requestBody = {};
-    int index = 0;
-
-    for (final image in images) {
-      final imageBytes = await image.readAsBytes();
-      String base64Image = base64Encode(imageBytes);
-      requestBody['image_$index'] = base64Image;
-      index++;
-    }
-
-    return requestBody;
+  Future<http.MultipartFile> _createRequestBody(XFile image) async {
+    final bytes = await image.readAsBytes();
+    final multipartFile = http.MultipartFile.fromBytes(
+      'file',
+      bytes,
+      filename: 'image.jpg',
+    );
+    return multipartFile;
   }
 }

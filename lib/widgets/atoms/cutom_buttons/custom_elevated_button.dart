@@ -20,7 +20,8 @@ class CustomElevatedButton extends StatelessWidget {
         backgroundColor:
             MaterialStateProperty.all<Color>(ColorTheme.primaryColor),
         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-            const EdgeInsets.symmetric(vertical: 15, horizontal: 30)),
+            const EdgeInsets.symmetric(
+                vertical: 20, horizontal: 40)), // Aumenta el padding aquí
         shape: MaterialStateProperty.all<OutlinedBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
@@ -28,7 +29,14 @@ class CustomElevatedButton extends StatelessWidget {
         ),
       ),
       child: isProcessing
-          ? CircularProgressIndicator()
+          ? const SizedBox(
+              width: 160,
+              height: 120,
+              child: CircularProgressIndicator(
+                color: ColorTheme.secondaryColor,
+                strokeWidth: 2.5,
+              ),
+            )
           : Text(
               text,
               style: const TextStyle(fontSize: 16),
